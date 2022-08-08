@@ -8,14 +8,10 @@ import { MenuService } from '../services/menu/menu.service';
 })
 export class MenuComponent implements OnInit {
 
-  private amount: number = 10;
-  private algorithmsSelected: String = "Bubble sort"
-
   constructor(protected _menuService: MenuService) {
   }
 
   ngOnInit(): void {
-    this.algorithmsSelected = this._menuService.algorithms[0];
   }
 
   protected reset() {
@@ -27,20 +23,24 @@ export class MenuComponent implements OnInit {
   }
 
   protected set AlgorithmsSelected(algorithm: String) {
-    this.algorithmsSelected = algorithm;
+    this._menuService.AlgorithmsSelected = algorithm;
     this.reset();
   }
 
-  protected set Amount(newAmount: number) {
-    this.amount = newAmount;
+  protected get AlgorithmsSelected() {
+    return this._menuService.AlgorithmsSelected;
   }
 
-  protected get Amount(): number {
-    return this.amount;
+  protected set Amount(newAmount: Number) {
+    this._menuService.Amount = newAmount;
+  }
+
+  protected get Amount(): Number {
+    return this._menuService.Amount;
   }
 
   protected getClassButton(algorithm: String): String {
-    if (this.algorithmsSelected === algorithm)
+    if (this.AlgorithmsSelected === algorithm)
       return ('selected');
 
     return ('not-selected');
