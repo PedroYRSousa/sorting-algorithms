@@ -31,11 +31,11 @@ export class MenuComponent implements OnInit {
     return this._menuService.AlgorithmsSelected;
   }
 
-  protected set Amount(newAmount: Number) {
+  protected set Amount(newAmount: number) {
     this._menuService.Amount = newAmount;
   }
 
-  protected get Amount(): Number {
+  protected get Amount(): number {
     return this._menuService.Amount;
   }
 

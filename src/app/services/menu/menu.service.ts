@@ -5,7 +5,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 export class MenuService {
 
-  private amount: Number = 10;
+  private amount: number = 10;
   private algorithmsSelected: String = "Bubble";
   readonly algorithms: Array<String> = ["Bubble", "Insertion", "Select"];
 
@@ -24,11 +24,11 @@ export class MenuService {
     return this.algorithmsSelected;
   }
 
-  set Amount(amount: Number) {
+  set Amount(amount: number) {
     this.amount = amount;
   }
 
-  get Amount(): Number {
+  get Amount(): number {
     return this.amount;
   }
 
