@@ -38,18 +38,20 @@
         background-color: rebeccapurple;
     }
 
-    .not-selected {
-        background-color: rebeccapurple;
-    }
-
-    .selected {
-        color: white;
-        background-color: transparent;
-        border: 1px solid rebeccapurple;
-    }
-
     button {
+        color: white;
+
         &.mat-stroked-button {
+            color: red;
+            border: 1px solid rebeccapurple;
+        }
+
+        &.not-selected {
+            background-color: rebeccapurple;
+        }
+
+        &.selected {
+            background-color: transparent;
             border: 1px solid rebeccapurple;
         }
     }

@@ -6,6 +6,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class MenuService {
 
   private amount: number = 10;
+  private frameRate: number = 1;
   private algorithmsSelected: String = "Bubble";
   readonly algorithms: Array<String> = ["Bubble", "Insertion", "Select"];
 
@@ -14,6 +15,14 @@ export class MenuService {
 
   constructor() {
     this.algorithmsSelected = this.algorithms[0];
+  }
+
+  set FrameRate(frameRate: number) {
+    this.frameRate = frameRate;
+  }
+
+  get FrameRate(): number {
+    return this.frameRate;
   }
 
   set AlgorithmsSelected(selected: String) {
