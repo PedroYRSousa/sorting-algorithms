@@ -15,11 +15,11 @@ export class MenuComponent implements OnInit {
   }
 
   protected reset() {
-    this._menuService.sort.emit(this.Amount);
+    this._menuService.reset.emit();
   }
 
   protected sort() {
-    this._menuService.reset.emit(this.Amount);
+    this._menuService.sort.emit();
   }
 
   protected set AlgorithmsSelected(algorithm: String) {
