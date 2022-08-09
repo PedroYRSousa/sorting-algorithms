@@ -10,6 +10,7 @@ import { ViewsortComponent } from './viewsort/viewsort.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SortComponent } from './viewsort/sort/sort.component';
 import { CanvasComponent } from './viewsort/canvas/canvas.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 
 
@@ -26,6 +27,7 @@ import { CanvasComponent } from './viewsort/canvas/canvas.component';
     BrowserModule,
     MatInputModule,
     MatButtonModule,
+    MatSliderModule,
     BrowserAnimationsModule
   ],
   providers: [],

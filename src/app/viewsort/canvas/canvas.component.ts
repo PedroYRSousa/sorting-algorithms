@@ -48,18 +48,30 @@ export class CanvasComponent implements OnDestroy, OnInit {
         const width = clientWidth * 0.95;
         const height = (width / (aspectRatio));
 
-        s.frameRate(this._menuService.Speed);
+        s.frameRate(MenuService.FRAME_RATE * this._menuService.Speed);
         s.createCanvas(width, height);
       };
 
-      s.draw = () => {
-        s.frameRate(this._menuService.Speed);
+      s.draw = async () => {
+        var test = 0;
+        s.frameRate(MenuService.FRAME_RATE * this._menuService.Speed);
         s.background(0, 77, 178);
         Node.showNodes(this.alg?.Nodes, s);
+        if (!(this.alg?.isAnimation()))
+          s.frameRate((MenuService.FRAME_RATE * this._menuService.Speed) / 10);
         this.alg?.sort();
       };
 
     }, this.canvas.nativeElement);
+  }
+
+  private sleep(milliseconds: number) {
+    var start = new Date().getTime();
+    while (true) {
+      if ((new Date().getTime() - start) > milliseconds) {
+        break;
+      }
+    }
   }
 
 }

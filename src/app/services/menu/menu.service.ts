@@ -5,9 +5,10 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 export class MenuService {
 
+  static readonly FRAME_RATE = 60;
   static readonly BUBBLE_SORT = "Bubble";
 
-  private speed: number = 2;
+  private speed: number = 1;
   private amount: number = 10;
   private algorithmsSelected: String = MenuService.BUBBLE_SORT;
 

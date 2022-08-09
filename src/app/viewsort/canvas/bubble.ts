@@ -5,9 +5,12 @@ export default class Bubble extends Algorithm {
     static readonly COLOR_PRIMARY = [51, 25, 76];
     static readonly COLOR_SECUNDARY = [178, 153, 204];
 
-    private isOrdened = false;
-    private countIsOrdened = 0;
+    private step1 = false;
+    private step2 = false;
+    private step3 = false;
+
     private indexPrimary = 0;
+    private isOrdened = false;
     private indexSecundary = 1;
 
     constructor() {
@@ -16,16 +19,22 @@ export default class Bubble extends Algorithm {
         this.init();
     }
 
+    isAnimation(): Boolean {
+        return (this.PrimaryNode.Value > this.SecundaryNode.Value && !this.step3);
+    }
+
     init(): void {
         this.toStart = false;
         this.isOrdened = false;
-        this.countIsOrdened = 0;
         this.indexPrimary = 0;
         this.indexSecundary = 1;
+        this.step1 = false;
+        this.step2 = false;
+        this.step3 = false;
 
-        if (this.nodes.length > 2) {
-            this.nodes[this.indexPrimary]?.setColor(Bubble.COLOR_PRIMARY);
-            this.nodes[this.indexSecundary]?.setColor(Bubble.COLOR_SECUNDARY);
+        if (this.nodes.length >= 2) {
+            this.PrimaryNode.setColor(Bubble.COLOR_PRIMARY)
+            this.SecundaryNode.setColor(Bubble.COLOR_SECUNDARY)
         }
     }
 
@@ -34,22 +43,23 @@ export default class Bubble extends Algorithm {
             return;
 
         if (!this.isOrdened) {
-            if (this.PrimaryNode.Value > this.SecundaryNode.Value) {
-                var temp = this.PrimaryNode.Value;
-                this.PrimaryNode.Value = this.SecundaryNode.Value;
-                this.SecundaryNode.Value = temp;
+            if (this.PrimaryNode.Value > this.SecundaryNode.Value && !this.step3) {
+                this.switchNodes();
+                // var temp = this.PrimaryNode.Value;
+                // this.PrimaryNode.Value = this.SecundaryNode.Value;
+                // this.SecundaryNode.Value = temp;
                 this.isOrdened = false;
-                this.countIsOrdened = 0;
             }
             else {
-                this.nextIndex(this.indexPrimary + 1);
+                this.step1 = false;
+                this.step2 = false;
+                this.step3 = false;
+
+                this.nextIndex(this.indexSecundary + 1);
 
                 this.PrimaryNode.setColor(Bubble.COLOR_PRIMARY);
                 this.SecundaryNode.setColor(Bubble.COLOR_SECUNDARY);
-                this.countIsOrdened++;
             }
-            if (this.countIsOrdened == this.nodes.length)
-                this.isOrdened = true;
         }
         else {
             this.PrimaryNode.setColor(Node.COLOR_DEFAULT);
@@ -57,15 +67,71 @@ export default class Bubble extends Algorithm {
         }
     }
 
-    private nextIndex(newPrimaryIndex: number) {
+    private switchNodes() {
+        if (!this.step1) {
+            const { Pos, PosOrigin } = this.PrimaryNode;
+
+            console.log("step 1");
+
+            this.PrimaryNode.toTop();
+            this.SecundaryNode.toBot();
+
+            if (Pos[Node.POS_Y] <= PosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP) {
+                this.step1 = true;
+            }
+
+            if (Pos[Node.POS_Y] >= PosOrigin[Node.POS_Y] + Node.WIDTH + Node.GAP) {
+                this.step1 = true;
+            }
+        }
+        else if (!this.step2) {
+            const { Pos } = this.PrimaryNode;
+            const { PosOrigin } = this.SecundaryNode;
+
+            console.log("step 2");
+
+            this.PrimaryNode.toRight();
+            this.SecundaryNode.toLeft();
+
+            if (Pos[Node.POS_X] >= PosOrigin[Node.POS_X]) {
+                this.step2 = true;
+            }
+        }
+        else if (!this.step3) {
+            const { Pos, PosOrigin } = this.PrimaryNode;
+
+            console.log("step 3");
+
+            this.PrimaryNode.toBot();
+            this.SecundaryNode.toTop();
+
+            if (Pos[Node.POS_Y] >= PosOrigin[Node.POS_Y]) {
+                this.PrimaryNode.PosOrigin[Node.POS_X] = this.PrimaryNode.Pos[Node.POS_X];
+                this.PrimaryNode.PosOrigin[Node.POS_Y] = this.PrimaryNode.Pos[Node.POS_Y];
+                this.SecundaryNode.PosOrigin[Node.POS_X] = this.SecundaryNode.Pos[Node.POS_X];
+                this.SecundaryNode.PosOrigin[Node.POS_Y] = this.SecundaryNode.Pos[Node.POS_Y];
+                var temp = this.PrimaryNode;
+                this.Nodes[this.indexPrimary] = this.Nodes[this.indexSecundary];
+                this.Nodes[this.indexSecundary] = temp;
+                this.step3 = true;
+            }
+        }
+    }
+
+    private nextIndex(newSecundaryIndex: number) {
         this.PrimaryNode.setColor(Node.COLOR_DEFAULT);
         this.SecundaryNode.setColor(Node.COLOR_DEFAULT);
 
-        if (this.indexSecundary >= this.nodes.length - 1)
-            newPrimaryIndex = 0;
-
-        this.indexPrimary = newPrimaryIndex;
-        this.indexSecundary = this.indexPrimary + 1;
+        if (newSecundaryIndex > this.nodes.length - 1) {
+            this.indexPrimary += 1;
+            if (this.indexPrimary > this.nodes.length - 2) {
+                this.isOrdened = true;
+                this.indexPrimary = 0;
+            }
+            this.indexSecundary = this.indexPrimary + 1;
+        }
+        else
+            this.indexSecundary = newSecundaryIndex;
     }
 
     private get PrimaryNode() {

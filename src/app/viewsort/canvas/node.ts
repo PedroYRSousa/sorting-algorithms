@@ -7,6 +7,7 @@ export default class Node {
     protected pos: Array<number> = [-1, -1];
     protected posOrigin: Array<number> = [-1, -1];
 
+    static readonly GAP = 5;
     static readonly SPEED = 1;
     static readonly POS_X = 0;
     static readonly POS_Y = 1;
@@ -39,7 +40,6 @@ export default class Node {
     }
 
     static showNodes(nodes: Array<any>, s: any) {
-        const gap = 5;
         var index: number = 0;
 
         if (!nodes)
@@ -50,8 +50,8 @@ export default class Node {
             const { width, height } = node.graphic;
 
             if (node.pos[Node.POS_X] === -1) {
-                const poxX = ((s.width / 2) - ((width * (nodes.length / 2)) + (gap * (nodes.length / 2))));
-                node.pos[Node.POS_X] = ((width + gap) * index) + poxX;
+                const poxX = ((s.width / 2) - ((width * (nodes.length / 2)) + (Node.GAP * (nodes.length / 2))));
+                node.pos[Node.POS_X] = ((width + Node.GAP) * index) + poxX;
                 node.posOrigin[Node.POS_X] = node.pos[Node.POS_X];
             }
 
@@ -72,6 +72,22 @@ export default class Node {
 
     get Value(): number {
         return (this.value);
+    }
+
+    set Pos(pos: number[]) {
+        this.pos = pos;
+    }
+
+    get Pos(): number[] {
+        return (this.pos);
+    }
+
+    set PosOrigin(posOrigin: number[]) {
+        this.posOrigin = posOrigin;
+    }
+
+    get PosOrigin(): number[] {
+        return (this.posOrigin);
     }
 
     setColor(color: Array<number>) {

@@ -8,6 +8,8 @@ import { MenuService } from '../services/menu/menu.service';
 })
 export class MenuComponent implements OnInit {
 
+  protected FRAME_RATE = MenuService.FRAME_RATE;
+
   constructor(protected _menuService: MenuService) {
   }
 
