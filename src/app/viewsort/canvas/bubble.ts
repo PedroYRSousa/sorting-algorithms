@@ -2,8 +2,8 @@ import Node from "./node";
 import Algorithm from "./algorithm";
 
 export default class Bubble extends Algorithm {
-    static readonly COLOR_SELECT_1 = [51, 25, 76];
-    static readonly COLOR_SELECT_2 = [178, 153, 204];
+    static readonly COLOR_PRIMARY = [51, 25, 76];
+    static readonly COLOR_SECUNDARY = [178, 153, 204];
 
     private isOrdened = false;
     private countIsOrdened = 0;
@@ -21,8 +21,8 @@ export default class Bubble extends Algorithm {
         this.indexSecundary = 1;
 
         if (this.nodes.length > 2) {
-            this.nodes[this.indexPrimary]?.setColor(Bubble.COLOR_SELECT_1);
-            this.nodes[this.indexSecundary]?.setColor(Bubble.COLOR_SELECT_2);
+            this.nodes[this.indexPrimary]?.setColor(Bubble.COLOR_PRIMARY);
+            this.nodes[this.indexSecundary]?.setColor(Bubble.COLOR_SECUNDARY);
         }
     }
 
@@ -41,8 +41,8 @@ export default class Bubble extends Algorithm {
             else {
                 this.nextIndex(this.indexPrimary + 1);
 
-                this.PrimaryNode.setColor(Bubble.COLOR_SELECT_1);
-                this.SecundaryNode.setColor(Bubble.COLOR_SELECT_2);
+                this.PrimaryNode.setColor(Bubble.COLOR_PRIMARY);
+                this.SecundaryNode.setColor(Bubble.COLOR_SECUNDARY);
                 this.countIsOrdened++;
             }
             if (this.countIsOrdened == this.nodes.length)
