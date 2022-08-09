@@ -5,7 +5,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 export class MenuService {
 
-  static readonly FRAME_RATE = 60;
+  static readonly FRAME_RATE = 240;
   static readonly BUBBLE_SORT = "Bubble";
 
   private speed: number = 1;
