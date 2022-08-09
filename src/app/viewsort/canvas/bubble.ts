@@ -17,6 +17,9 @@ export default class Bubble extends Algorithm {
     }
 
     init(): void {
+        this.toStart = false;
+        this.isOrdened = false;
+        this.countIsOrdened = 0;
         this.indexPrimary = 0;
         this.indexSecundary = 1;
 

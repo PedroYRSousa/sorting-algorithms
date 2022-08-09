@@ -44,18 +44,16 @@ export class CanvasComponent implements OnDestroy, OnInit {
       }
 
       s.setup = () => {
-        s.noCursor();
         const aspectRatio = 16 / 9;
         const width = clientWidth * 0.95;
         const height = (width / (aspectRatio));
-        const { FrameRate } = this._menuService;
 
-        s.frameRate(FrameRate);
-
+        s.frameRate(this._menuService.Speed);
         s.createCanvas(width, height);
       };
 
       s.draw = () => {
+        s.frameRate(this._menuService.Speed);
         s.background(0, 77, 178);
         Node.showNodes(this.alg?.Nodes, s);
         this.alg?.sort();

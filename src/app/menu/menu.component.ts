@@ -35,6 +35,14 @@ export class MenuComponent implements OnInit {
     return this._menuService.AlgorithmsSelected;
   }
 
+  protected set Speed(newSpeed: number) {
+    this._menuService.Speed = newSpeed;
+  }
+
+  protected get Speed(): number {
+    return this._menuService.Speed;
+  }
+
   protected set Amount(newAmount: number) {
     this._menuService.Amount = newAmount;
   }

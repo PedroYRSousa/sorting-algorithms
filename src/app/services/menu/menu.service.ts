@@ -7,8 +7,8 @@ export class MenuService {
 
   static readonly BUBBLE_SORT = "Bubble";
 
+  private speed: number = 2;
   private amount: number = 10;
-  private frameRate: number = 3;
   private algorithmsSelected: String = MenuService.BUBBLE_SORT;
 
   readonly algorithms: Array<String> = [MenuService.BUBBLE_SORT];
@@ -21,20 +21,25 @@ export class MenuService {
     this.algorithmsSelected = this.algorithms[0];
   }
 
-  set FrameRate(frameRate: number) {
-    this.frameRate = frameRate;
-  }
-
-  get FrameRate(): number {
-    return this.frameRate;
-  }
-
   set AlgorithmsSelected(selected: String) {
     this.algorithmsSelected = selected;
   }
 
   get AlgorithmsSelected(): String {
     return this.algorithmsSelected;
+  }
+
+  set Speed(speed: number) {
+    this.speed = speed;
+  }
+
+  get Speed(): number {
+    if (this.speed > 15)
+      this.speed = 15;
+    if (this.speed <= 0)
+      this.speed = 0;
+
+    return this.speed;
   }
 
   set Amount(amount: number) {
