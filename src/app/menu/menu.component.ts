@@ -18,8 +18,12 @@ export class MenuComponent implements OnInit {
     this._menuService.reset.emit();
   }
 
-  protected sort() {
-    this._menuService.sort.emit();
+  protected start() {
+    this._menuService.start.emit();
+  }
+
+  protected pause() {
+    this._menuService.pause.emit();
   }
 
   protected set AlgorithmsSelected(algorithm: String) {

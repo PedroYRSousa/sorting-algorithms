@@ -14,8 +14,6 @@ export default class Node {
     static readonly COLOR_GREEN = 0;
     static readonly COLOR_BLUE = 0;
     static readonly COLOR_DEFAULT = [102, 51, 153];
-    static readonly COLOR_SELECT_1 = [51, 25, 76];
-    static readonly COLOR_SELECT_2 = [178, 153, 204];
     static readonly WIDTH = 50;
     static readonly HEIGHT = 50;
 
@@ -43,6 +41,9 @@ export default class Node {
     static showNodes(nodes: Array<any>, s: any) {
         const gap = 5;
         var index: number = 0;
+
+        if (!nodes)
+            return;
 
         while (index < nodes.length) {
             const node: Node = nodes[index];

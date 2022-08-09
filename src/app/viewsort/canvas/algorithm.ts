@@ -1,25 +1,31 @@
 import Node from "./node";
 
 export default abstract class Algorithm {
+    protected toStart = false;
     protected nodes: Array<Node> = [];
 
-    constructor(nodes: Array<Node>) {
-        this.nodes = nodes;
+    abstract init(): void;
+    abstract sort(): void;
+
+    get Nodes(): Array<Node> {
+        return this.nodes;
     }
 
-    abstract init(): void;
-    abstract start(): void;
+    start(): void {
+        this.toStart = true;
+    }
 
-    // protected isOrdened(): boolean {
-    //     for (let indexPrimary = 0; indexPrimary < this.nodes.length - 2; indexPrimary++) {
-    //         var nodeP = this.nodes[indexPrimary];
-    //         for (let indexSecundary = indexPrimary + 1; indexSecundary < this.nodes.length - 1; indexSecundary++) {
-    //             var nodeS = this.nodes[indexSecundary];
+    pause(): void {
+        this.toStart = false;
+    }
 
-    //             if (nodeS.Value < nodeP.Value)
-    //                 return (false);
-    //         }
-    //     }
-    //     return (true);
-    // }
+    reset(amount: number, s: any): void {
+        this.toStart = false;
+        this.createNodes(amount, s);
+    }
+
+    createNodes(amount: number, s: any) {
+        this.nodes = Node.createNodes(amount, s);
+        this.init();
+    }
 }

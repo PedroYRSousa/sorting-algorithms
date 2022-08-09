@@ -2,26 +2,34 @@ import Node from "./node";
 import Algorithm from "./algorithm";
 
 export default class Bubble extends Algorithm {
+    static readonly COLOR_SELECT_1 = [51, 25, 76];
+    static readonly COLOR_SELECT_2 = [178, 153, 204];
+
     private isOrdened = false;
     private countIsOrdened = 0;
     private indexPrimary = 0;
     private indexSecundary = 1;
 
-    constructor(nodes: Array<Node>) {
-        super(nodes);
-        this.indexPrimary = 0;
-        this.indexSecundary = 1;
+    constructor() {
+        super();
+
         this.init();
     }
 
     init(): void {
+        this.indexPrimary = 0;
+        this.indexSecundary = 1;
+
         if (this.nodes.length > 2) {
-            this.nodes[this.indexPrimary]?.setColor(Node.COLOR_SELECT_1);
-            this.nodes[this.indexSecundary]?.setColor(Node.COLOR_SELECT_2);
+            this.nodes[this.indexPrimary]?.setColor(Bubble.COLOR_SELECT_1);
+            this.nodes[this.indexSecundary]?.setColor(Bubble.COLOR_SELECT_2);
         }
     }
 
-    start(): void {
+    sort(): void {
+        if (!this.toStart)
+            return;
+
         if (!this.isOrdened) {
             if (this.PrimaryNode.Value > this.SecundaryNode.Value) {
                 var temp = this.PrimaryNode.Value;
@@ -33,18 +41,16 @@ export default class Bubble extends Algorithm {
             else {
                 this.nextIndex(this.indexPrimary + 1);
 
-                this.PrimaryNode.setColor(Node.COLOR_SELECT_1);
-                this.SecundaryNode.setColor(Node.COLOR_SELECT_2);
+                this.PrimaryNode.setColor(Bubble.COLOR_SELECT_1);
+                this.SecundaryNode.setColor(Bubble.COLOR_SELECT_2);
                 this.countIsOrdened++;
             }
             if (this.countIsOrdened == this.nodes.length)
                 this.isOrdened = true;
         }
-        else
-        {
+        else {
             this.PrimaryNode.setColor(Node.COLOR_DEFAULT);
             this.SecundaryNode.setColor(Node.COLOR_DEFAULT);
-            console.log("Aqui!!!");
         }
     }
 

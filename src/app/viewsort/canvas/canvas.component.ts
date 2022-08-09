@@ -1,6 +1,6 @@
 import * as p5 from 'p5';
 import Node from './node';
-import { Component, OnInit, OnDestroy, OnChanges, ElementRef, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { MenuService } from 'src/app/services/menu/menu.service';
 import Bubble from './bubble';
 import Algorithm from './algorithm';
@@ -10,12 +10,16 @@ import Algorithm from './algorithm';
   templateUrl: './canvas.component.html',
   styleUrls: ['./canvas.component.scss']
 })
-export class CanvasComponent implements OnDestroy, OnInit, OnChanges {
+export class CanvasComponent implements OnDestroy, OnInit {
 
+  private alg!: Algorithm;
   private sketch!: p5;
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLElement>;
 
   constructor(private _menuService: MenuService) {
+    this._menuService.start.subscribe(() => this.alg?.start());
+    this._menuService.pause.subscribe(() => this.alg?.pause());
+    this._menuService.reset.subscribe(() => this.alg?.reset(this._menuService.Amount, this.sketch));
   }
 
   ngOnInit(): void {
@@ -26,24 +30,17 @@ export class CanvasComponent implements OnDestroy, OnInit, OnChanges {
     this.sketch.remove();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.sketch.remove();
-    this.init();
-  }
-
-  refresh = () => {
-    this.sketch.remove();
-    this.init();
-  }
-
   init() {
     const { clientWidth } = this.canvas.nativeElement;
 
     this.sketch = new p5((s: any) => {
-      var alg: Algorithm;
-      var nodes: Array<Node> = [];
-
       s.preload = () => {
+        const { Amount, AlgorithmsSelected } = this._menuService;
+
+        if (AlgorithmsSelected === MenuService.BUBBLE_SORT) {
+          this.alg = new Bubble();
+          this.alg.createNodes(Amount, s);
+        }
       }
 
       s.setup = () => {
@@ -51,20 +48,17 @@ export class CanvasComponent implements OnDestroy, OnInit, OnChanges {
         const aspectRatio = 16 / 9;
         const width = clientWidth * 0.95;
         const height = (width / (aspectRatio));
+        const { FrameRate } = this._menuService;
 
-        s.frameRate(this._menuService.FrameRate);
+        s.frameRate(FrameRate);
 
         s.createCanvas(width, height);
-        nodes = Node.createNodes(this._menuService.Amount, s);
-
-        if (this._menuService.AlgorithmsSelected === "Bubble")
-          alg = new Bubble(nodes);
       };
 
       s.draw = () => {
         s.background(0, 77, 178);
-        Node.showNodes(nodes, s);
-        alg.start();
+        Node.showNodes(this.alg?.Nodes, s);
+        this.alg?.sort();
       };
 
     }, this.canvas.nativeElement);

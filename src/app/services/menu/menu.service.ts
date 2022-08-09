@@ -5,12 +5,16 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 export class MenuService {
 
-  private amount: number = 10;
-  private frameRate: number = 1;
-  private algorithmsSelected: String = "Bubble";
-  readonly algorithms: Array<String> = ["Bubble", "Insertion", "Select"];
+  static readonly BUBBLE_SORT = "Bubble";
 
-  sort = new EventEmitter();
+  private amount: number = 10;
+  private frameRate: number = 3;
+  private algorithmsSelected: String = MenuService.BUBBLE_SORT;
+
+  readonly algorithms: Array<String> = [MenuService.BUBBLE_SORT];
+
+  start = new EventEmitter();
+  pause = new EventEmitter();
   reset = new EventEmitter();
 
   constructor() {
