@@ -42,6 +42,11 @@ export class MenuService {
   }
 
   get Amount(): number {
+    if (this.amount > 15)
+      this.amount = 15;
+    if (this.amount <= 0)
+      this.amount = 0;
+
     return this.amount;
   }
 

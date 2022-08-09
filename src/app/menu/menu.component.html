@@ -1,6 +1,6 @@
 <section id="container-amount">
     <p>Amount</p>
-    <input matInput type="number" min="1" max="20" [(ngModel)]="this.Amount">
+    <input matInput type="number" min="1" max="15" [(ngModel)]="this.Amount">
 </section>
 <section class="container-buttons">
     <button mat-raised-button (click)="AlgorithmsSelected = algorithm" [ngClass]="getClassButton(algorithm)"
@@ -10,5 +10,5 @@
 <section class="container-buttons">
     <button mat-raised-button (click)="this.start()" color="accent">Sort</button>
     <button mat-raised-button (click)="this.pause()" color="accent">Pause</button>
-    <button mat-stroked-button (click)="this.reset()" color="accent">Reset</button>
+    <button mat-stroked-button (click)="this.reset()" color="accent">Reset / New</button>
 </section>
