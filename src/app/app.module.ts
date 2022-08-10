@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { FormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
 import { MatInputModule } from '@angular/material/input';
+import { BrowserModule } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
-import { ViewsortComponent } from './viewsort/viewsort.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SortComponent } from './viewsort/sort/sort.component';
-import { CanvasComponent } from './viewsort/canvas/canvas.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppComponent } from './app.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { ViewsortComponent } from './components/viewsort/viewsort.component';
+import { CanvasComponent } from './components/viewsort/components/canvas/canvas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
+    CanvasComponent,
     ViewsortComponent,
-    SortComponent,
-    CanvasComponent
   ],
   imports: [
     FormsModule,
