@@ -12,8 +12,6 @@ import { SortComponent } from './viewsort/sort/sort.component';
 import { CanvasComponent } from './viewsort/canvas/canvas.component';
 import { MatSliderModule } from '@angular/material/slider';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
