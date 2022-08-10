@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  protected reset() {
+  protected new() {
     this._menuService.reset.emit();
   }
 
@@ -31,7 +31,7 @@ export class MenuComponent implements OnInit {
 
   protected set AlgorithmsSelected(algorithm: String) {
     this._menuService.AlgorithmsSelected = algorithm;
-    this.reset();
+    this.new();
   }
 
   protected get AlgorithmsSelected() {

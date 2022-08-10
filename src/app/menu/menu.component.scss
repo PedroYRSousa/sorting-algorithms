@@ -1,72 +1,94 @@
 :host {
-    width: 150px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 20px;
-    padding: 1%;
-    border: 1px solid rebeccapurple;
+    * {
+        margin: 0px;
+        border: 0px;
+        padding: 0px;
+        outline: none;
+        box-sizing: border-box;
+    }
 
     @media only screen and (max-width: 800px) {
         width: 100%;
-        padding: 3%;
         border: 1px solid white;
         background-color: rebeccapurple;
     }
 
-    section {
+    padding: 1%;
+    width: 150px;
+    border: 1px solid rebeccapurple;
+
+    div#container-menu {
         display: flex;
         flex-direction: column;
 
+        gap: 20px;
 
-        &#container-under-construction {
-            width: 100;
-        }
-
-        &#container-amount,
-        &#container-speed,
-        &#container-under-construction {
+        section {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            color: white;
+
+            &.container-buttons {
+                gap: 5px;
+            }
+
+            p,
+            input,
+            button {
+                width: 100%;
+                color: white;
+            }
 
             p {
                 font-size: larger;
+                text-align: center;
+            }
+
+            input {
+
+                padding: 5%;
+                background-color: rebeccapurple;
+            }
+
+            mat-slider {
+                ::ng-deep {
+                    * {
+                        background-color: rebeccapurple;
+                    }
+                }
+            }
+
+            button {
+                color: white;
+
+                &.mat-stroked-button {
+                    color: #e91e63;
+                    border: 1px solid #e91e63;
+                }
+
+                &.selected {
+                    border: 1px solid rebeccapurple;
+                    background-color: transparent;
+                }
+
+                &.not-selected {
+                    background-color: rebeccapurple;
+                }
             }
         }
-
-        &.container-buttons {
-            gap: 5px;
-        }
     }
 
-    input {
-        width: 100%;
-        height: 25px;
+    div#under-construction {
+        display: flex;
+        flex-direction: column;
 
+        h1 {
+            width: 100%;
+            text-align: center;
+        }
+
+        gap: 5px;
+        padding: 5px;
         color: white;
-        outline: none;
-        padding: 1.5%;
-        background-color: rebeccapurple;
-    }
-
-    button {
-        color: white;
-
-        &.mat-stroked-button {
-            color: red;
-            border: 1px solid rebeccapurple;
-        }
-
-        &.not-selected {
-            background-color: rebeccapurple;
-        }
-
-        &.selected {
-            background-color: transparent;
-            border: 1px solid rebeccapurple;
-        }
     }
 }

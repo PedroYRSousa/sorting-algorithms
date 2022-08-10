@@ -12,13 +12,6 @@ $light-theme: mat.define-light-theme((color: (primary: $light-primary,
 @include mat.core-theme($light-theme);
 @include mat.button-theme($light-theme);
 
-* {
-    border: 0px;
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-}
-
 html,
 body {
     width: 100vw;
@@ -41,4 +34,11 @@ app-root {
 
 body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
 }
