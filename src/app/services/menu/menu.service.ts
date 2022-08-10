@@ -15,10 +15,10 @@ export class MenuService {
 
   readonly algorithms: Array<String> = [MenuService.BUBBLE_SORT, MenuService.SELECTION_SORT];
 
-  setAlgorithm = new EventEmitter();
+  new = new EventEmitter();
   start = new EventEmitter();
   pause = new EventEmitter();
-  reset = new EventEmitter();
+  setAlgorithm = new EventEmitter();
 
   constructor() {
     this.algorithmsSelected = this.algorithms[0];
