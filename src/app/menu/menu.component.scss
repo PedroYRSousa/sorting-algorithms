@@ -8,11 +8,25 @@
     padding: 1%;
     border: 1px solid rebeccapurple;
 
+    @media only screen and (max-width: 800px) {
+        width: 100%;
+        padding: 3%;
+        border: 1px solid white;
+        background-color: rebeccapurple;
+    }
+
     section {
         display: flex;
         flex-direction: column;
 
-        &#container-amount, &#container-speed {
+
+        &#container-under-construction {
+            width: 100;
+        }
+
+        &#container-amount,
+        &#container-speed,
+        &#container-under-construction {
             display: flex;
             align-items: center;
             justify-content: center;

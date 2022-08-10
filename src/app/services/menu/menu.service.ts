@@ -7,13 +7,15 @@ export class MenuService {
 
   static readonly FRAME_RATE = 240;
   static readonly BUBBLE_SORT = "Bubble";
+  static readonly SELECTION_SORT = "Selection";
 
   private speed: number = 1;
   private amount: number = 10;
   private algorithmsSelected: String = MenuService.BUBBLE_SORT;
 
-  readonly algorithms: Array<String> = [MenuService.BUBBLE_SORT];
+  readonly algorithms: Array<String> = [MenuService.BUBBLE_SORT, MenuService.SELECTION_SORT];
 
+  setAlgorithm = new EventEmitter();
   start = new EventEmitter();
   pause = new EventEmitter();
   reset = new EventEmitter();
@@ -24,6 +26,7 @@ export class MenuService {
 
   set AlgorithmsSelected(selected: String) {
     this.algorithmsSelected = selected;
+    this.setAlgorithm.emit();
   }
 
   get AlgorithmsSelected(): String {
