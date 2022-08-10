@@ -8,7 +8,6 @@ import { MenuService } from 'src/app/services/menu/menu.service';
 })
 export class MenuComponent implements OnInit {
 
-  protected readonly WIDTH = window.innerWidth;
   protected readonly FRAME_RATE = MenuService.FRAME_RATE;
 
   constructor(protected _menuService: MenuService) {

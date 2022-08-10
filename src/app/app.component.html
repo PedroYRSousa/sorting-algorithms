@@ -1,2 +1,8 @@
-<app-menu></app-menu>
-<app-viewsort></app-viewsort>
+<app-menu *ngIf="WIDTH > 800"></app-menu>
+<app-viewsort *ngIf="WIDTH > 800"></app-viewsort>
+
+<div id="under-construction" *ngIf="WIDTH <= 800">
+    <h1>Under construction. </h1>
+    <p>I'm making compatibility with mobile devices.</p>
+    <p>Sorry for the inconvenience, I'm just one.</p>
+</div>

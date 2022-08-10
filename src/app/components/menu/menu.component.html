@@ -1,4 +1,4 @@
-<div id="container-menu" *ngIf="WIDTH > 800">
+<div id="container-menu">
     <section id="container-algorithms" class="container-buttons">
         <p>Algorithms</p>
         <button mat-raised-button (click)="AlgorithmsSelected = algorithm" [ngClass]="getClassButton(algorithm)"
@@ -20,10 +20,4 @@
         <button mat-raised-button (click)="this.pause()" color="accent">Pause</button>
         <button mat-stroked-button (click)="this.new()" color="accent">New</button>
     </section>
-</div>
-
-<div id="under-construction" *ngIf="WIDTH <= 800">
-    <h1>Under construction. </h1>
-    <p>I'm making compatibility with mobile devices.</p>
-    <p>Sorry for the inconvenience, I'm just one.</p>
 </div>
