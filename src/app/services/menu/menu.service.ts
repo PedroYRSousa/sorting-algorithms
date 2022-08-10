@@ -1,11 +1,13 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
+import Sketch from 'src/app/components/viewsort/components/canvas/sketch/sketch'
+
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  static readonly FRAME_RATE = 240;
+  static readonly FRAME_RATE = Sketch.FRAME_RATE;
   static readonly BUBBLE_SORT = "Bubble";
   static readonly SELECTION_SORT = "Selection";
 
@@ -38,10 +40,10 @@ export class MenuService {
   }
 
   get Speed(): number {
-    if (this.speed > 15)
-      this.speed = 15;
-    if (this.speed <= 0)
-      this.speed = 0;
+    if (this.speed > 1)
+      this.speed = 1;
+    if (this.speed <= 0.1)
+      this.speed = 0.1;
 
     return this.speed;
   }
