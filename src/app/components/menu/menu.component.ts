@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
   }
 
   protected new() {
-    this._menuService.reset.emit();
+    this._menuService.new.emit();
   }
 
   protected start() {
