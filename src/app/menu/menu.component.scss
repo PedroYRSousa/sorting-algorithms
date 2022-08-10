@@ -68,7 +68,7 @@
 
                 &.selected {
                     border: 1px solid rebeccapurple;
-                    background-color: transparent;
+                    background-color: rgba($color: rebeccapurple, $alpha: .40);
                 }
 
                 &.not-selected {
