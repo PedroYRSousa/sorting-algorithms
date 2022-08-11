@@ -11,7 +11,7 @@ export class MenuService {
   static readonly BUBBLE_SORT = "Bubble";
   static readonly SELECTION_SORT = "Selection";
 
-  private speed: number = 1;
+  private speed: number = 100;
   private amount: number = 10;
   private algorithmsSelected: String = MenuService.BUBBLE_SORT;
 
@@ -40,10 +40,10 @@ export class MenuService {
   }
 
   get Speed(): number {
-    if (this.speed > 1)
+    if (this.speed > 100)
+      this.speed = 100;
+    if (this.speed <= 1)
       this.speed = 1;
-    if (this.speed <= 0.1)
-      this.speed = 0.1;
 
     return this.speed;
   }
