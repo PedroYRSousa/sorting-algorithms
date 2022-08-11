@@ -48,7 +48,7 @@ export default class Bubble extends Algorithm {
 
         if (!this.isOrdened) {
             if (this.PrimaryNode.Value > this.SecundaryNode.Value && !this.step3) {
-                this.switchNodes();
+                this.animation();
                 this.isOrdened = false;
             }
             else {
@@ -68,7 +68,7 @@ export default class Bubble extends Algorithm {
         }
     }
 
-    private switchNodes() {
+    private animation() {
         if (!this.step1) {
             const { Pos, PosOrigin } = this.PrimaryNode;
 
