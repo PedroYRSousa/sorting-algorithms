@@ -8,7 +8,8 @@ import { MenuService } from 'src/app/services/menu/menu.service';
 })
 export class MenuComponent implements OnInit {
 
-  protected readonly FRAME_RATE = MenuService.FRAME_RATE;
+  isStarted = false;
+  isPaused = false;
 
   constructor(protected _menuService: MenuService) {
   }
@@ -18,14 +19,20 @@ export class MenuComponent implements OnInit {
 
   protected new() {
     this._menuService.new.emit();
+    this.isStarted = false;
+    this.isPaused = false;
   }
 
   protected start() {
     this._menuService.start.emit();
+    this.isStarted = true;
+    this.isPaused = false;
   }
 
   protected pause() {
     this._menuService.pause.emit();
+    this.isStarted = false;
+    this.isPaused = true;
   }
 
   protected set AlgorithmsSelected(algorithm: String) {

@@ -7,7 +7,7 @@
     </section>
 
     <section id="container-speed">
-        <p>Speed <b>{{this.Speed}}</b></p>
+        <p>Speed <b>{{this.Speed}}%</b></p>
         <mat-slider step="1" min="1" max="100" value="100" [(ngModel)]="this.Speed">
         </mat-slider>
         <p>Amount <b>{{this.Amount}}</b></p>
@@ -16,8 +16,8 @@
     </section>
 
     <section id="container-options" class="container-buttons">
-        <button mat-raised-button (click)="this.start()" color="accent">Sort</button>
-        <button mat-raised-button (click)="this.pause()" color="accent">Pause</button>
+        <button mat-raised-button [disabled]="this.isStarted" (click)="this.start()" color="accent">{{ !this.isPaused ? "Start" : "Resume" }}</button>
+        <button mat-raised-button [disabled]="!this.isStarted" (click)="this.pause()" color="accent">Pause</button>
         <button mat-stroked-button (click)="this.new()" color="accent">New</button>
     </section>
 </div>

@@ -1,17 +1,14 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
-import Sketch from 'src/app/components/viewsort/components/canvas/sketch/sketch'
-
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  static readonly FRAME_RATE = Sketch.FRAME_RATE;
   static readonly BUBBLE_SORT = "Bubble";
   static readonly SELECTION_SORT = "Selection";
 
-  private speed: number = 100;
+  private speed: number = 50;
   private amount: number = 10;
   private algorithmsSelected: String = MenuService.BUBBLE_SORT;
 
