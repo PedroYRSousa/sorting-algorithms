@@ -9,7 +9,7 @@ export default abstract class Algorithm {
     }
 
     abstract init(): void;
-    abstract sort(): void;
+    abstract sort(deltaTime: number, speed: number): void;
     abstract SpeedAux(): number;
     abstract isAnimation(): Boolean;
 
