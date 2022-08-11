@@ -3,6 +3,7 @@ import * as p5 from 'p5';
 import { MenuService } from 'src/app/services/menu/menu.service';
 import Node from 'src/app/components/viewsort/components/canvas/node/node';
 import Bubble from 'src/app/components/viewsort/components/canvas/algorithms/bubble';
+import Selection from 'src/app/components/viewsort/components/canvas/algorithms/selection';
 import Algorithm from 'src/app/components/viewsort/components/canvas/algorithms/algorithm';
 
 export default class Sketch {
@@ -18,8 +19,8 @@ export default class Sketch {
         this.menuService = menuService;
         this.clientWidth = element.clientWidth;
         this.sketch = new p5((s: any) => this.handleAnimation(s), element);
-        if (menuService.AlgorithmsSelected === MenuService.BUBBLE_SORT)
-            this.alg = new Bubble();
+
+        this.initAlg();
 
         menuService.start.subscribe(() => this.alg?.start());
         menuService.pause.subscribe(() => this.alg?.pause());
@@ -53,5 +54,12 @@ export default class Sketch {
                 s.frameRate((Sketch.FRAME_RATE * this.Speed) / 10);
             this.alg?.sort();
         };
+    }
+
+    private initAlg() {
+        if (this.menuService.AlgorithmsSelected === MenuService.BUBBLE_SORT)
+            this.alg = new Bubble();
+        if (this.menuService.AlgorithmsSelected === MenuService.SELECTION_SORT)
+            this.alg = new Selection();
     }
 }
