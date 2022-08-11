@@ -5,13 +5,14 @@ export default class Bubble extends Algorithm {
     static readonly COLOR_PRIMARY = [51, 25, 76];
     static readonly COLOR_SECUNDARY = [178, 153, 204];
 
-    private step1 = false;
-    private step2 = false;
-    private step3 = false;
-
+    private absorber = 0;
     private indexPrimary = 0;
     private isOrdened = false;
     private indexSecundary = 1;
+
+    private step1 = false;
+    private step2 = false;
+    private step3 = false;
 
     constructor() {
         super();
@@ -32,6 +33,7 @@ export default class Bubble extends Algorithm {
         this.isOrdened = false;
         this.indexPrimary = 0;
         this.indexSecundary = 1;
+        this.absorber = 0;
         this.step1 = false;
         this.step2 = false;
         this.step3 = false;
@@ -42,16 +44,20 @@ export default class Bubble extends Algorithm {
         }
     }
 
-    sort(): void {
+    sort(deltaTime: number, speed: number): void {
         if (!this.toStart)
             return;
 
         if (!this.isOrdened) {
-            if (this.PrimaryNode.Value > this.SecundaryNode.Value && !this.step3) {
-                this.animation();
+            if (this.absorber <= (deltaTime * 1000) / speed) {
+                this.absorber += deltaTime;
+            }
+            else if (this.PrimaryNode.Value > this.SecundaryNode.Value && !this.step3) {
+                this.animation(deltaTime, speed);
                 this.isOrdened = false;
             }
             else {
+                this.absorber = 0;
                 this.step1 = false;
                 this.step2 = false;
                 this.step3 = false;
@@ -68,39 +74,51 @@ export default class Bubble extends Algorithm {
         }
     }
 
-    private animation() {
+    private animation(deltaTime: number, speed: number) {
         if (!this.step1) {
-            const { Pos, PosOrigin } = this.PrimaryNode;
+            const { Pos: pPos, PosOrigin: pPosOrigin } = this.PrimaryNode;
+            const { Pos: sPos, PosOrigin: sPosOrigin } = this.SecundaryNode;
 
-            this.PrimaryNode.toTop();
-            this.SecundaryNode.toBot();
+            this.PrimaryNode.toTop(deltaTime, speed * this.SpeedAux());
+            this.SecundaryNode.toBot(deltaTime, speed * this.SpeedAux());
 
-            if (Pos[Node.POS_Y] <= PosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP) {
+            if (pPos[Node.POS_Y] <= pPosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP) {
                 this.step1 = true;
-            }
-
-            if (Pos[Node.POS_Y] >= PosOrigin[Node.POS_Y] + Node.WIDTH + Node.GAP) {
-                this.step1 = true;
+                if (pPos[Node.POS_Y] < pPosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP)
+                    pPos[Node.POS_Y] = pPosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP
+                if (sPos[Node.POS_Y] > sPosOrigin[Node.POS_Y] + Node.WIDTH + Node.GAP)
+                    sPos[Node.POS_Y] = sPosOrigin[Node.POS_Y] + Node.WIDTH + Node.GAP
             }
         }
         else if (!this.step2) {
-            const { Pos } = this.PrimaryNode;
-            const { PosOrigin } = this.SecundaryNode;
+            const { Pos: pPos, PosOrigin: pPosOrigin } = this.PrimaryNode;
+            const { Pos: sPos, PosOrigin: sPosOrigin } = this.SecundaryNode;
 
-            this.PrimaryNode.toRight();
-            this.SecundaryNode.toLeft();
+            this.PrimaryNode.toRight(deltaTime, speed * this.SpeedAux());
+            this.SecundaryNode.toLeft(deltaTime, speed * this.SpeedAux());
 
-            if (Pos[Node.POS_X] >= PosOrigin[Node.POS_X]) {
+            if (pPos[Node.POS_X] >= sPosOrigin[Node.POS_X]) {
                 this.step2 = true;
+                if (pPos[Node.POS_X] > sPosOrigin[Node.POS_X])
+                    pPos[Node.POS_X] = sPosOrigin[Node.POS_X]
+                if (sPos[Node.POS_X] < pPosOrigin[Node.POS_X])
+                    sPos[Node.POS_X] = pPosOrigin[Node.POS_X]
             }
         }
         else if (!this.step3) {
-            const { Pos, PosOrigin } = this.PrimaryNode;
+            const { Pos: pPos, PosOrigin: pPosOrigin } = this.PrimaryNode;
+            const { Pos: sPos, PosOrigin: sPosOrigin } = this.SecundaryNode;
 
-            this.PrimaryNode.toBot();
-            this.SecundaryNode.toTop();
 
-            if (Pos[Node.POS_Y] >= PosOrigin[Node.POS_Y]) {
+            this.PrimaryNode.toBot(deltaTime, speed * this.SpeedAux());
+            this.SecundaryNode.toTop(deltaTime, speed * this.SpeedAux());
+
+            if (pPos[Node.POS_Y] >= pPosOrigin[Node.POS_Y]) {
+                if (pPos[Node.POS_Y] > pPosOrigin[Node.POS_Y])
+                    pPos[Node.POS_Y] = pPosOrigin[Node.POS_Y]
+                if (sPos[Node.POS_Y] < sPosOrigin[Node.POS_Y])
+                    sPos[Node.POS_Y] = sPosOrigin[Node.POS_Y]
+
                 this.PrimaryNode.PosOrigin[Node.POS_X] = this.PrimaryNode.Pos[Node.POS_X];
                 this.PrimaryNode.PosOrigin[Node.POS_Y] = this.PrimaryNode.Pos[Node.POS_Y];
                 this.SecundaryNode.PosOrigin[Node.POS_X] = this.SecundaryNode.Pos[Node.POS_X];
@@ -109,6 +127,7 @@ export default class Bubble extends Algorithm {
                 this.Nodes[this.indexPrimary] = this.Nodes[this.indexSecundary];
                 this.Nodes[this.indexSecundary] = temp;
                 this.step3 = true;
+                this.absorber = 0;
             }
         }
     }

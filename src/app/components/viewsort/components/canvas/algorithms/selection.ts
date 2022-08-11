@@ -7,6 +7,7 @@ export default class Selection extends Algorithm {
     static readonly COLOR_ORDENED = [255, 255, 255];
     static readonly COLOR_SMALL = [178, 153, 204];
 
+    private absorber = 0;
     private indexSmall = 0;
     private indexPointer = 1;
     private isOrdened = false;
@@ -38,6 +39,7 @@ export default class Selection extends Algorithm {
         this.indexPointer = 0;
         this.hasFoundSmall = false;
         this.countSmall = 0;
+        this.absorber = 0;
         this.step1 = false;
         this.step2 = false;
         this.step3 = false;
@@ -48,15 +50,19 @@ export default class Selection extends Algorithm {
         }
     }
 
-    sort(): void {
+    sort(deltaTime: number, speed: number): void {
         if (!this.toStart)
             return;
 
         if (!this.isOrdened) {
-            if (this.hasFoundSmall && (this.indexPointer < this.indexSmall) && !this.step3) {
-                this.animation();
+            if (this.absorber <= (deltaTime * 1000) / speed) {
+                this.absorber += deltaTime;
+            }
+            else if (this.hasFoundSmall && (this.indexPointer < this.indexSmall) && !this.step3) {
+                this.animation(deltaTime, speed);
             }
             else {
+                this.absorber = 0;
                 this.step1 = false;
                 this.step2 = false;
                 this.step3 = false;
@@ -73,35 +79,50 @@ export default class Selection extends Algorithm {
         }
     }
 
-    private animation() {
+    private animation(deltaTime: number, speed: number) {
         if (!this.step1) {
-            const { Pos, PosOrigin } = this.PointerNode;
+            const { Pos: pPos, PosOrigin: pPosOrigin } = this.PointerNode;
+            const { Pos: sPos, PosOrigin: sPosOrigin } = this.SmallNode;
 
-            this.PointerNode.toTop();
-            this.SmallNode.toBot();
+            this.PointerNode.toTop(deltaTime, speed * this.SpeedAux());
+            this.SmallNode.toBot(deltaTime, speed * this.SpeedAux());
 
-            if (Pos[Node.POS_Y] <= PosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP) {
+            if (pPos[Node.POS_Y] <= pPosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP) {
                 this.step1 = true;
+                if (pPos[Node.POS_Y] < pPosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP)
+                    pPos[Node.POS_Y] = pPosOrigin[Node.POS_Y] - Node.WIDTH - Node.GAP
+                if (sPos[Node.POS_Y] > sPosOrigin[Node.POS_Y] + Node.WIDTH + Node.GAP)
+                    sPos[Node.POS_Y] = sPosOrigin[Node.POS_Y] + Node.WIDTH + Node.GAP
             }
         }
         else if (!this.step2) {
-            const { Pos } = this.PointerNode;
-            const { PosOrigin } = this.SmallNode;
+            const { Pos: pPos, PosOrigin: pPosOrigin } = this.PointerNode;
+            const { Pos: sPos, PosOrigin: sPosOrigin } = this.SmallNode;
 
-            this.PointerNode.toRight();
-            this.SmallNode.toLeft();
+            this.PointerNode.toRight(deltaTime, speed * this.SpeedAux());
+            this.SmallNode.toLeft(deltaTime, speed * this.SpeedAux());
 
-            if (Pos[Node.POS_X] >= PosOrigin[Node.POS_X]) {
+            if (pPos[Node.POS_X] >= sPosOrigin[Node.POS_X]) {
                 this.step2 = true;
+                if (pPos[Node.POS_X] > sPosOrigin[Node.POS_X])
+                    pPos[Node.POS_X] = sPosOrigin[Node.POS_X]
+                if (sPos[Node.POS_X] < pPosOrigin[Node.POS_X])
+                    sPos[Node.POS_X] = pPosOrigin[Node.POS_X]
             }
         }
         else if (!this.step3) {
-            const { Pos, PosOrigin } = this.PointerNode;
+            const { Pos: pPos, PosOrigin: pPosOrigin } = this.PointerNode;
+            const { Pos: sPos, PosOrigin: sPosOrigin } = this.SmallNode;
 
-            this.PointerNode.toBot();
-            this.SmallNode.toTop();
+            this.PointerNode.toBot(deltaTime, speed * this.SpeedAux());
+            this.SmallNode.toTop(deltaTime, speed * this.SpeedAux());
 
-            if (Pos[Node.POS_Y] >= PosOrigin[Node.POS_Y]) {
+            if (pPos[Node.POS_Y] >= pPosOrigin[Node.POS_Y]) {
+                if (pPos[Node.POS_Y] > pPosOrigin[Node.POS_Y])
+                    pPos[Node.POS_Y] = pPosOrigin[Node.POS_Y]
+                if (sPos[Node.POS_Y] < sPosOrigin[Node.POS_Y])
+                    sPos[Node.POS_Y] = sPosOrigin[Node.POS_Y]
+
                 this.SmallNode.setColor(Node.COLOR_DEFAULT);
                 this.PointerNode.setColor(Node.COLOR_DEFAULT);
                 this.PointerNode.PosOrigin[Node.POS_X] = this.PointerNode.Pos[Node.POS_X];
@@ -114,6 +135,7 @@ export default class Selection extends Algorithm {
                 this.step3 = true;
                 this.hasFoundSmall = false;
                 this.countSmall++;
+                this.absorber = 0;
                 this.indexSmall = this.countSmall;
             }
         }
