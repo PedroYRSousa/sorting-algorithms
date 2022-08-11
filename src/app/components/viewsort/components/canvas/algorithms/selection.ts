@@ -102,6 +102,8 @@ export default class Selection extends Algorithm {
             this.SmallNode.toTop();
 
             if (Pos[Node.POS_Y] >= PosOrigin[Node.POS_Y]) {
+                this.SmallNode.setColor(Node.COLOR_DEFAULT);
+                this.PointerNode.setColor(Node.COLOR_DEFAULT);
                 this.PointerNode.PosOrigin[Node.POS_X] = this.PointerNode.Pos[Node.POS_X];
                 this.PointerNode.PosOrigin[Node.POS_Y] = this.PointerNode.Pos[Node.POS_Y];
                 this.SmallNode.PosOrigin[Node.POS_X] = this.SmallNode.Pos[Node.POS_X];
