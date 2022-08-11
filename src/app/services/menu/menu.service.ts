@@ -15,7 +15,7 @@ export class MenuService {
   private amount: number = 10;
   private algorithmsSelected: String = MenuService.BUBBLE_SORT;
 
-  readonly algorithms: Array<String> = [MenuService.BUBBLE_SORT];
+  readonly algorithms: Array<String> = [MenuService.BUBBLE_SORT, MenuService.SELECTION_SORT];
 
   new = new EventEmitter();
   start = new EventEmitter();
