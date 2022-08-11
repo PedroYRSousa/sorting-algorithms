@@ -8,7 +8,7 @@ import Algorithm from 'src/app/components/viewsort/components/canvas/algorithms/
 
 export default class Sketch {
 
-    static readonly FRAME_RATE = 240;
+    static readonly FRAME_RATE = 60;
 
     private readonly menuService: MenuService;
     private sketch!: p5;
@@ -43,16 +43,14 @@ export default class Sketch {
             const width = this.clientWidth * 0.95;
             const height = (width / (aspectRatio));
 
+            s.frameRate(Sketch.FRAME_RATE);
             s.createCanvas(width, height);
         };
 
         s.draw = async () => {
-            s.frameRate((Sketch.FRAME_RATE * this.Speed) * this.alg.SpeedAux());
             s.background(0, 77, 178);
             Node.showNodes(this.alg?.Nodes, s);
-            if (!(this.alg?.isAnimation()))
-                s.frameRate((Sketch.FRAME_RATE * this.Speed) / 10);
-            this.alg?.sort();
+            this.alg?.sort(s.deltaTime, this.Speed);
         };
     }
 
