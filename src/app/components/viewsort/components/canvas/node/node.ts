@@ -8,7 +8,7 @@ export default class Node {
     protected posOrigin: Array<number> = [-1, -1];
 
     static readonly GAP = 5;
-    static readonly SPEED = 1;
+    static readonly SPEED = 10;
     static readonly POS_X = 0;
     static readonly POS_Y = 1;
     static readonly COLOR_RED = 0;
@@ -95,20 +95,20 @@ export default class Node {
         this.draw();
     }
 
-    toTop() {
-        this.pos[Node.POS_Y] -= Node.SPEED;
+    toTop(deltaTime: number, speed: number) {
+        this.pos[Node.POS_Y] -= speed * (deltaTime / 1000);
     }
 
-    toLeft() {
-        this.pos[Node.POS_X] -= Node.SPEED;
+    toLeft(deltaTime: number, speed: number) {
+        this.pos[Node.POS_X] -= speed * (deltaTime / 1000);
     }
 
-    toRight() {
-        this.pos[Node.POS_X] += Node.SPEED;
+    toRight(deltaTime: number, speed: number) {
+        this.pos[Node.POS_X] += speed * (deltaTime / 1000);
     }
 
-    toBot() {
-        this.pos[Node.POS_Y] += Node.SPEED;
+    toBot(deltaTime: number, speed: number) {
+        this.pos[Node.POS_Y] += speed * (deltaTime / 1000);
     }
 
     private draw() {
